@@ -9,11 +9,15 @@ require('dotenv').config({ silent: true });
 var TRAVELS_DB_NAME = "travels"
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
+var services = null ;
+if (process.env.VCAP_SERVICES) {
+  services = JSON.parse(process.env.VCAP_SERVICES);
+}
 
 var cloudantCredentials = appEnv.getService('cloudantNoSQLDB');
 console.log(cloudantCredentials)
-var cloudant_user = process.env.cloudant_user || cloudantCredentials[0].credentials.username ;
-var cloudant_password = process.env.cloudant_password || cloudantCredentials[0].credentials.password ;
+var cloudant_user = process.env.cloudant_user || services.cloudantNoSQLDB[0].credentials.username ;
+var cloudant_password = process.env.cloudant_password || services.cloudantNoSQLDB[0].credentials.password ;
 
 // Initialize cloudant
 var cloudant = Cloudant({account:cloudant_user, password:cloudant_password});

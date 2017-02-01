@@ -11,9 +11,9 @@ var TRAVELS_DB_NAME = "travels"
 var appEnv = cfenv.getAppEnv();
 
 var cloudantCredentials = appEnv.getService('cloudantNoSQLDB');
-
-var cloudant_user = process.env.cloudant_user || cloudantCredentials.credentials.username ;
-var cloudant_password = process.env.cloudant_password || cloudantCredentials.credentials.password ;
+console.log(cloudantCredentials)
+var cloudant_user = process.env.cloudant_user || cloudantCredentials[0].credentials.username ;
+var cloudant_password = process.env.cloudant_password || cloudantCredentials[0].credentials.password ;
 
 // Initialize cloudant
 var cloudant = Cloudant({account:cloudant_user, password:cloudant_password});
